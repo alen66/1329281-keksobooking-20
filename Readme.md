@@ -1,7 +1,7 @@
 # Личный проект «Кексобукинг» [![Build status][travis-image]][travis-url]
 
 * Студент: [Алена Крупнова](https://up.htmlacademy.ru/javascript/20/user/1329281).
-* Наставник: `Неизвестно`.
+* Наставник: [Сергей Рожков](https://github.com/Sergey-Rozhkov)
 
 ---
 
