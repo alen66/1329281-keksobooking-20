@@ -8,6 +8,8 @@ var MOCK_CHECKIN = ['12:00', '13:00', '14:00'];
 var MOCK_CHECKOUT = ['12:00', '13:00', '14:00'];
 var MOCK_FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
 var MOCK_TYPE = ['palace', 'flat', 'house', 'bungalo'];
+var X = 50; /* ширина метки */
+var Y = 70; /* высота метки */
 
 function generateRandomNumber(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -36,21 +38,22 @@ function generateData() {
       },
       'offer': {
         'title': generateRandomValueFromArray(MOCK_TITLES),
-        'address': '{location.x}, {location.y}',
-        'price': generateRandomNumber(500000, 4000000),
+        'address': '',
+        'price': generateRandomNumber(1500, 10000),
         'type': generateRandomValueFromArray(MOCK_TYPE),
         'rooms': generateRandomNumber(1, 6),
-        'guests': generateRandomNumber(1, 20),
+        'guests': generateRandomNumber(1, 10),
         'checkin': generateRandomValueFromArray(MOCK_CHECKIN),
         'checkout': generateRandomValueFromArray(MOCK_CHECKOUT),
         'features': generateRandomValueFromArray(MOCK_FEATURES),
-        'description': '                           ',
+        'description': 'Великолепная квартира-студия в центре Токио.',
         'photos': generateArrRandomLength(MOCK_PHOTOS)},
       'location': {
         'x': generateRandomNumber(0, 500),
         'y': generateRandomNumber(130, 630)}
     };
     result.push(ad);
+    ad.offer.address = ad.location.x + ',' + ad.location.y;
   }
   return result;
 }
@@ -67,13 +70,7 @@ function makeElement(arr) {
 
   pinElement.querySelector('img').src = arr.author.avatar;
   pinElement.querySelector('img').alt = arr.offer.title;
-  fragment.appendChild(pinElement);
-  var pinElementWidth = pinElement.offsetWidth;
-  var pinElementHeight = pinElement.offsetHeight;
-  var pinElementX = arr.location.x + pinElementWidth;
-  var pinElementY = arr.location.y + pinElementHeight;
-  pinElement.style = 'left:' + pinElementX + 'px; top: ' + pinElementY + 'px;';
-  fragment.removeChild(pinElement);
+  pinElement.style = 'left:' + (arr.location.x + X) + 'px; top: ' + (arr.location.y + Y) + 'px;';
 
   return pinElement;
 }
