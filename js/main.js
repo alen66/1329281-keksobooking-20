@@ -1,7 +1,7 @@
 'use strict';
 
 var NUMBER_OF_ASVERSMENTS = 8;
-var MOCK_TITLES = ['домик', 'пентхаус', 'хрущевка', 'элитная квартира', 'общага', 'малосемейка', 'коммуналка', 'квартира'];
+var MOCK_TITLES = ['домик', 'пентхаус', 'хрущевка', 'Чудесное предложение для молодоженов', 'общага', 'малосемейка', 'коммуналка', 'квартира'];
 var MOCK_PHOTOS = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg',
   'http://o0.github.io/assets/images/tokyo/hotel3.jpg'];
 var MOCK_CHECKIN = ['12:00', '13:00', '14:00'];
