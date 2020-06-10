@@ -8,8 +8,8 @@ var MOCK_CHECKIN = ['12:00', '13:00', '14:00'];
 var MOCK_CHECKOUT = ['12:00', '13:00', '14:00'];
 var MOCK_FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
 var MOCK_TYPE = ['palace', 'flat', 'house', 'bungalo'];
-var X = 50; /* ширина метки */
-var Y = 70; /* высота метки */
+var X = 50;
+var Y = 70;
 var VALUE_MOCK_TYPE = ['Дворец', 'Квартира', 'Дом', 'Бунгало'];
 
 function generateRandomNumber(min, max) {
@@ -41,7 +41,7 @@ function generateData() {
       },
       'offer': {
         'title': generateRandomValueFromArray(MOCK_TITLES),
-        'address': adX + ',' + adY,
+        'address': (adX + X) + ',' + (adY + Y),
         'price': generateRandomNumber(1500, 10000),
         'type': generateRandomValueFromArray(MOCK_TYPE),
         'rooms': generateRandomNumber(1, 6),
@@ -52,8 +52,8 @@ function generateData() {
         'description': 'Великолепная квартира-студия в центре Токио.',
         'photos': generateArrRandomLength(MOCK_PHOTOS)},
       'location': {
-        'x': adX + X,
-        'y': adY + Y}
+        'x': adX,
+        'y': adY}
     };
     result.push(ad);
   }
@@ -98,20 +98,19 @@ function generateSrcPhoto(arr, classElem, cardElem, classBlock) {
   var cardTemp = cardElem.querySelector(classElem);
   var cardBlock = cardElem.querySelector(classBlock);
   cardTemp.src = arr[0];
-  for (var i = 1; i < arr.length; i++) {
+  arr.forEach(function (el) {
     var cardEl = cardTemp.cloneNode(true);
-    cardEl.src = arr[i];
+    cardEl.src = el;
     fragment.appendChild(cardEl);
-  }
+  });
   cardBlock.appendChild(fragment);
 }
 
-
 function generateFeature(arr, cardElem, classElem) {
-  for (var i = 0; i < arr.length; i++) {
-    var perem = classElem + '--' + arr[i];
-    cardElem.querySelector(perem).textContent = arr[i];
-  }
+  arr.forEach(function (elem) {
+    var perem = classElem + '--' + elem;
+    cardElem.querySelector(perem).textContent = elem;
+  });
 
   var ulNodeList = cardElem.querySelectorAll(classElem);
   ulNodeList.forEach(function (el) {
