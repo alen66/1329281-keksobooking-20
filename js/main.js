@@ -10,7 +10,7 @@ var MOCK_FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'con
 var MOCK_TYPE = ['palace', 'flat', 'house', 'bungalo'];
 var X = 50; /* ширина метки */
 var Y = 70; /* высота метки */
-var VALUE_MOCK_TYPE = ['Дворец', 'Квартира', 'Дом', 'Бунгало' ];
+var VALUE_MOCK_TYPE = ['Дворец', 'Квартира', 'Дом', 'Бунгало'];
 
 function generateRandomNumber(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -86,17 +86,17 @@ mapElement.appendChild(fragment);
 var mapFaded = document.querySelector('.map');
 mapFaded.classList.remove('map--faded');
 
-function generateObjectValue(keys,values,perem) {
+function generateObjectValue(keys, values, perem) {
   var obj = {};
   for (var i = 0; i < keys.length; i++) {
     obj[keys[i]] = values[i];
   }
-    return obj[perem];
+  return obj[perem];
 }
 
-function generateSrcPhoto(arr, classElem, cardElem,classBlock) {
+function generateSrcPhoto(arr, classElem, cardElem, classBlock) {
   var cardTemp = cardElem.querySelector(classElem);
-  var cardBlock = cardElem.querySelector(classBlock)
+  var cardBlock = cardElem.querySelector(classBlock);
   cardTemp.src = arr[0];
   for (var i = 1; i < arr.length; i++) {
     var cardEl = cardTemp.cloneNode(true);
@@ -108,19 +108,18 @@ function generateSrcPhoto(arr, classElem, cardElem,classBlock) {
 
 
 function generateFeature(arr, cardElem, classElem) {
-    for ( var i=0; i < arr.length; i++) {
-      var perem = classElem + '--'+ arr[i];
-      cardElem.querySelector(perem).textContent = arr[i];
-    }
+  for (var i = 0; i < arr.length; i++) {
+    var perem = classElem + '--' + arr[i];
+    cardElem.querySelector(perem).textContent = arr[i];
+  }
 
-    var ulNodeList = cardElem.querySelectorAll(classElem);
-    for (var el of ulNodeList) {
-      if (el.innerText == '') {
+  var ulNodeList = cardElem.querySelectorAll(classElem);
+  ulNodeList.forEach(function (el) {
+    if (el.innerText === '') {
       el.style.display = 'none';
-      }
     }
+  });
 }
-
 
 function makeCardElement(arr) {
 
@@ -129,13 +128,13 @@ function makeCardElement(arr) {
   cardElement.querySelector('.popup__title').textContent = arr.offer.title;
   cardElement.querySelector('.popup__text--address').textContent = arr.offer.address;
   cardElement.querySelector('.popup__text--price').textContent = arr.offer.price + '₽/ночь';
-  cardElement.querySelector('.popup__type').textContent = generateObjectValue(MOCK_TYPE,VALUE_MOCK_TYPE,[arr.offer.type]);
+  cardElement.querySelector('.popup__type').textContent = generateObjectValue(MOCK_TYPE, VALUE_MOCK_TYPE, [arr.offer.type]);
   cardElement.querySelector('.popup__description').textContent = arr.offer.description;
   cardElement.querySelector('.popup__text--time').textContent = 'Заезд после ' + arr.offer.checkin + ', выезд до ' + arr.offer.checkout;
   cardElement.querySelector('.popup__text--capacity').textContent = arr.offer.rooms + ' комнат(ы) для ' + arr.offer.guests + ' гостей';
   cardElement.querySelector('.popup__avatar').src = arr.author.avatar;
   generateSrcPhoto(arr.offer.photos, '.popup__photo', cardElement, '.popup__photos');
-  generateFeature(arr.offer.features, cardElement, '.popup__feature')
+  generateFeature(arr.offer.features, cardElement, '.popup__feature');
   return cardElement;
 }
 
