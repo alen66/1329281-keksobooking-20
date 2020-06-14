@@ -41,7 +41,7 @@ function generateData() {
       },
       'offer': {
         'title': generateRandomValueFromArray(MOCK_TITLES),
-        'address': (adX + X) + ',' + (adY + Y),
+        'address': adX  + ',' + adY,
         'price': generateRandomNumber(1500, 10000),
         'type': generateRandomValueFromArray(MOCK_TYPE),
         'rooms': generateRandomNumber(1, 6),
