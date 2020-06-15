@@ -10,7 +10,7 @@ var MOCK_FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'con
 var MOCK_TYPE = ['palace', 'flat', 'house', 'bungalo'];
 var X = 50;
 var Y = 70;
-var VALUE_MOCK_TYPE = ['Дворец', 'Квартира', 'Дом', 'Бунгало'];
+// var VALUE_MOCK_TYPE = ['Дворец', 'Квартира', 'Дом', 'Бунгало'];//
 var ROOM_NUMBER_MAX = 100;
 var ROOM_NUMBER_MIN = 0;
 
@@ -73,67 +73,72 @@ fieldsetElements.forEach(function (el) {
   el.disabled = true;
 });
 
-var adPinAdress = function () {
+function adPinAdress() {
   var addressFormElement = adFormElement.querySelector('#address');
   addressFormElement.value = Number.parseInt(mapPinMainElement.style.left, 10) + X / 2 + ', ' + (Number.parseInt(mapPinMainElement.style.top, 10) + Y);
-};
+}
+
 adPinAdress();
 
-var adFormElementActive = function () {
+function adFormElementActive() {
   document.querySelector('.map').classList.remove('map--faded');
   adFormElement.classList.remove('ad-form--disabled');
   fieldsetElements.forEach(function (el) {
     el.disabled = false;
   });
-};
+}
 
-function MouseButton(e) {
-  if (typeof e === 'object') {
-    switch (e.button) {
-      case 0:
-        adFormElementActive();
-        break;
-    }
+function onFormOpenClick(e) {
+  switch (e.button) {
+    case 0:
+      adFormElementActive();
   }
 }
 
-mapPinMainElement.addEventListener('mousedown', MouseButton);
-mapPinMainElement.addEventListener('keydown', function (evt) {
+function onFormOpenKey(evt) {
   if (evt.key === 'Enter') {
     adFormElementActive();
   }
-});
+}
+
+mapPinMainElement.addEventListener('mousedown', onFormOpenClick);
+mapPinMainElement.addEventListener('keydown', onFormOpenKey);
 
 var roomNumberElement = adFormElement.querySelector('#room_number');
 var capacityElement = adFormElement.querySelector('#capacity');
 var valueRoomNumberElement = roomNumberElement.value;
 var valueCapacityElement = capacityElement.value;
 
-var inputSelector = function (el, funcEl) {
+function onSelectInput(el, funcEl) {
   el.addEventListener('input', funcEl);
-};
+}
 
-var capacityFunc = function () {
+function capacityFunc() {
   valueRoomNumberElement = roomNumberElement.value;
   valueCapacityElement = capacityElement.value;
+
   if (!validRoomCapacity(valueRoomNumberElement, valueCapacityElement)) {
     if (valueRoomNumberElement < ROOM_NUMBER_MAX) {
-      capacityElement.setCustomValidity('Для гостей в количестве ' + valueCapacityElement + ', комнат не меньше ' + valueCapacityElement);
-    } else {
+      if (valueCapacityElement <= ROOM_NUMBER_MIN) {
+        capacityElement.setCustomValidity('Только вариант: 100 комнат');
+      } else {
+        capacityElement.setCustomValidity('Для гостей в количестве ' + valueCapacityElement + ', комнат не меньше ' + valueCapacityElement);
+      }
+    } else if (valueRoomNumberElement >= ROOM_NUMBER_MAX) {
       capacityElement.setCustomValidity('Только вариант: не для гостей');
     }
   } else {
     capacityElement.setCustomValidity('');
   }
-};
+}
 
-inputSelector(roomNumberElement, capacityFunc);
-inputSelector(capacityElement, capacityFunc);
+onSelectInput(roomNumberElement, capacityFunc);
+onSelectInput(capacityElement, capacityFunc);
 
-var validRoomCapacity = function (el1, el2) {
-  if (el1 < ROOM_NUMBER_MAX) {
-    if (el1 >= el2) {
-      if (el2 > ROOM_NUMBER_MIN) {
+function validRoomCapacity(roomsCount, guestsCount) {
+  if (roomsCount < ROOM_NUMBER_MAX) {
+    if (roomsCount >= guestsCount) {
+      if (guestsCount > ROOM_NUMBER_MIN) {
         return true;
       } else {
         return false;
@@ -142,17 +147,15 @@ var validRoomCapacity = function (el1, el2) {
       return false;
     }
   } else {
-    if (el2 === ROOM_NUMBER_MIN) {
+    if (guestsCount <= ROOM_NUMBER_MIN) {
       return true;
     } else {
       return false;
     }
   }
-};
-
-if (!validRoomCapacity(valueRoomNumberElement, valueCapacityElement)) {
-  capacityElement.setCustomValidity('Для гостей в количестве ' + valueCapacityElement + ', комнат не меньше ' + valueCapacityElement);
 }
+
+capacityFunc();
 
 var mapElement = document.querySelector('.map__pins');
 var fragment = document.createDocumentFragment();
@@ -176,13 +179,13 @@ resultGen.forEach(function (el) {
 
 mapElement.appendChild(fragment);
 
-function generateObjectValue(keys, values, perem) {
+/*  function generateObjectValue(keys, values, perem) {
   var obj = {};
   for (var i = 0; i < keys.length; i++) {
     obj[keys[i]] = values[i];
   }
   return obj[perem];
-}
+}*/
 
 function generateSrcPhoto(arr, classElem, cardElem, classBlock) {
   var cardTempElement = cardElem.querySelector(classElem);
@@ -217,7 +220,8 @@ function makeCardElement(arr) {
   cardElement.querySelector('.popup__title').textContent = arr.offer.title;
   cardElement.querySelector('.popup__text--address').textContent = arr.offer.address;
   cardElement.querySelector('.popup__text--price').textContent = arr.offer.price + '₽/ночь';
-  cardElement.querySelector('.popup__type').textContent = generateObjectValue(MOCK_TYPE, VALUE_MOCK_TYPE, [arr.offer.type]);
+  /*  cardElement.querySelector('.popup__type').textContent = generateObjectValue(MOCK_TYPE, VALUE_MOCK_TYPE, [arr.offer.type]);*/
+  cardElement.querySelector('.popup__type').textContent = arr.offer.type;
   cardElement.querySelector('.popup__description').textContent = arr.offer.description;
   cardElement.querySelector('.popup__text--time').textContent = 'Заезд после ' + arr.offer.checkin + ', выезд до ' + arr.offer.checkout;
   cardElement.querySelector('.popup__text--capacity').textContent = arr.offer.rooms + ' комнат(ы) для ' + arr.offer.guests + ' гостей';
