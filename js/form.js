@@ -9,8 +9,9 @@
   var valueCapacityElement = capacityElement.value;
 
   function adPinAdress() {
+
     var addressFormElement = window.main.adFormElement.querySelector('#address');
-    addressFormElement.value = Number.parseInt(window.main.mapPinMainElement.style.left, 10) + window.data.X / 2 + ', ' + (Number.parseInt(window.main.mapPinMainElement.style.top, 10) + window.data.Y);
+    addressFormElement.value = window.main.mapPinMainElement.offsetLeft + window.data.X / 2 + ', ' + (window.main.mapPinMainElement.offsetTop + window.data.Y);
   }
 
   adPinAdress();

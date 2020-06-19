@@ -2,7 +2,6 @@
 
 (function main() {
   var mapPinMainElement = document.querySelector('.map__pin--main');
-
   var adFormElement = document.querySelector('.ad-form');
   var fieldsetElements = adFormElement.querySelectorAll('fieldset');
   fieldsetElements.forEach(function (el) {
