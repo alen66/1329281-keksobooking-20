@@ -18,8 +18,7 @@
   }
 
   function onFormOpenClick(e) {
-    switch (e.button) {
-      case 0:
+    if (e.button === 0) {
         adFormElementActive();
     }
   }

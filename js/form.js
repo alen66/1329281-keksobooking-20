@@ -21,21 +21,17 @@
   }
 
   function validRoomCapacity(roomsCount, guestsCount) {
-    if (roomsCount < ROOM_NUMBER_MAX) {
-      if (roomsCount >= guestsCount) {
-        if (guestsCount > ROOM_NUMBER_MIN) {
-          return true;
-        } else {
-          return false;
+    if (+roomsCount < ROOM_NUMBER_MAX) {
+      if (+roomsCount >= guestsCount) {
+        if (+guestsCount > ROOM_NUMBER_MIN) {
+          return +guestsCount > ROOM_NUMBER_MIN;
         }
       } else {
         return false;
       }
     } else {
-      if (guestsCount <= ROOM_NUMBER_MIN) {
-        return true;
-      } else {
-        return false;
+      if (+guestsCount === ROOM_NUMBER_MIN) {
+        return +guestsCount === ROOM_NUMBER_MIN;
       }
     }
   }
@@ -45,13 +41,13 @@
     valueCapacityElement = capacityElement.value;
 
     if (!validRoomCapacity(valueRoomNumberElement, valueCapacityElement)) {
-      if (valueRoomNumberElement < ROOM_NUMBER_MAX) {
-        if (valueCapacityElement <= ROOM_NUMBER_MIN) {
+      if (+valueRoomNumberElement < ROOM_NUMBER_MAX) {
+        if (+valueCapacityElement === ROOM_NUMBER_MIN) {
           capacityElement.setCustomValidity('Только вариант: 100 комнат');
         } else {
           capacityElement.setCustomValidity('Для гостей в количестве ' + valueCapacityElement + ', комнат не меньше ' + valueCapacityElement);
         }
-      } else if (valueRoomNumberElement >= ROOM_NUMBER_MAX) {
+      } else if (+valueRoomNumberElement === ROOM_NUMBER_MAX) {
         capacityElement.setCustomValidity('Только вариант: не для гостей');
       }
     } else {
