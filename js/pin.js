@@ -22,4 +22,5 @@
   });
 
   mapElement.appendChild(fragment);
+
 })();

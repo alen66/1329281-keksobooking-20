@@ -19,7 +19,7 @@
 
   function onFormOpenClick(e) {
     if (e.button === 0) {
-        adFormElementActive();
+      adFormElementActive();
     }
   }
 

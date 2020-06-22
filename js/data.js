@@ -5,10 +5,10 @@
   var MOCK_TITLES = ['Внимание! Скидка!', 'Только для вас', 'Бизнесменам', 'Чудесное предложение для молодоженов', 'Для туристов', 'На длительное время', 'Даром', 'Не дорого!'];
   var MOCK_PHOTOS = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg',
     'http://o0.github.io/assets/images/tokyo/hotel3.jpg'];
-  var MOCK_CHECKIN = ['12:00', '13:00', '14:00'];
-  var MOCK_CHECKOUT = ['12:00', '13:00', '14:00'];
+  var MOCK_CHECKINS = ['12:00', '13:00', '14:00'];
+  var MOCK_CHECKOUTS = ['12:00', '13:00', '14:00'];
   var MOCK_FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
-  var MOCK_TYPE = ['palace', 'flat', 'house', 'bungalo'];
+  var MOCK_TYPES = ['palace', 'flat', 'house', 'bungalo'];
   var X = 50;
   var Y = 70;
 
@@ -44,11 +44,11 @@
           'title': generateRandomValueFromArray(MOCK_TITLES),
           'address': adX + ', ' + adY,
           'price': generateRandomNumber(1500, 10000),
-          'type': generateRandomValueFromArray(MOCK_TYPE),
+          'type': generateRandomValueFromArray(MOCK_TYPES),
           'rooms': generateRandomNumber(1, 6),
           'guests': generateRandomNumber(1, 10),
-          'checkin': generateRandomValueFromArray(MOCK_CHECKIN),
-          'checkout': generateRandomValueFromArray(MOCK_CHECKOUT),
+          'checkin': generateRandomValueFromArray(MOCK_CHECKINS),
+          'checkout': generateRandomValueFromArray(MOCK_CHECKOUTS),
           'features': generateArrRandomLength(MOCK_FEATURES),
           'description': 'Великолепная квартира-студия в центре Токио.',
           'photos': generateArrRandomLength(MOCK_PHOTOS)},

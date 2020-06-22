@@ -34,6 +34,7 @@
         return +guestsCount === ROOM_NUMBER_MIN;
       }
     }
+    return false;
   }
 
   function capacityFunc() {
