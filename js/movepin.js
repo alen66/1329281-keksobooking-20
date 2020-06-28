@@ -1,6 +1,6 @@
 'use strict';
 
-(function main() {
+(function movepin() {
   var pin = window.main.mapPinMainElement;
 
   pin.addEventListener('mousedown', function (evt) {
