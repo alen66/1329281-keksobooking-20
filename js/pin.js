@@ -1,6 +1,7 @@
 'use strict';
 
 (function pin() {
+  var MAX_NUMBER_PIN = 10;
   var mapElement = document.querySelector('.map__pins');
   var fragment = document.createDocumentFragment();
 
@@ -20,52 +21,55 @@
 
   function filter(arr) {
 
-    var randomResult = shuffle(arr);
-    sameresultXHR = randomResult.filter(function (it, index) {
-      return index < 5;
-    });
+    sameresultXHR = arr.slice(0, MAX_NUMBER_PIN);
+
     return sameresultXHR;
   }
 
   function render(result) {
-    var ifCardOpen = document.querySelector('.map__card');
-    if (ifCardOpen) {
+    var ifCardOpenElement = document.querySelector('.map__card');
+    if (ifCardOpenElement) {
       document.querySelector('.map__card').remove();
     }
-    var res = filter(result);
+    var resultFilterNumber = filter(result);
     var pinElements = document.querySelectorAll('.map__pin');
+    var pinMainElement = document.querySelector('.map__pin--main');
     if (pinElements) {
-      pinElements.forEach(function (element, index) {
-        if (index !== 0) {
+      pinElements.forEach(function (element) {
+        if (element !== pinMainElement) {
           element.remove();
         }
       });
     }
 
-    res.forEach(function (element, index) {
+    resultFilterNumber.forEach(function (element, index) {
       fragment.appendChild(makeElement(element, index));
     });
 
     mapElement.appendChild(fragment);
     window.pin = {
-      resultXHR: resultXHR,
+      randomResultXHR: randomResultXHR,
       render: render,
-      res: res
+      resultFilterNumber: resultFilterNumber
+
     };
     window.card.findPinElements();
   }
 
+  var randomResultXHR = [];
 
-  var resultXHR = [];
   function successHandler(author) {
+    var resultXHR = [];
     author.forEach(function (el, index) {
       resultXHR[index] = author[index];
     });
-    return render(resultXHR);
+    randomResultXHR = shuffle(resultXHR);
+
+    return render(randomResultXHR);
   }
 
 
-  function shuffle(arr) {
+  function shuffle(arr) { /* перемешивание массива */
     var j;
     var temp;
     for (var i = arr.length - 1; i > 0; i--) {

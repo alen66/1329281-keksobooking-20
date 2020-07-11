@@ -28,7 +28,7 @@
       cardFormClose();
     }
 
-    fragment.appendChild(makeCardElement(window.pin.res[el]));
+    fragment.appendChild(makeCardElement(window.pin.resultFilterNumber[el]));
     var mapCardElement = document.querySelector('.map');
     var mapCardBeforeElement = document.querySelector('.map__filters-container');
     mapCardElement.insertBefore(fragment, mapCardBeforeElement);
@@ -50,7 +50,7 @@
   function generateSrcPhoto(imageUrls, classElem, cardElem, classBlock) {
     var cardTempElement = cardElem.querySelector(classElem);
     var cardBlockElement = cardElem.querySelector(classBlock);
-    if (imageUrls.length !== 0) {
+    if (imageUrls.length > 0) {
       for (var i = 0; i < imageUrls.length - 1; i++) {
         fragment.appendChild(cardTempElement.cloneNode(true));
       }
