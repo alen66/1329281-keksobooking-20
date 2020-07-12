@@ -28,6 +28,7 @@
       } else {
         onError('Статус ответа: ' + xhr.status + ' ' + xhr.statusText);
       }
+      return xhr.response;
     });
     xhr.addEventListener('error', function () {
       onError('Произошла ошибка соединения');

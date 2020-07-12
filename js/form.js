@@ -14,6 +14,10 @@
     addressFormElement.value = window.main.mapPinMainElement.offsetLeft + window.data.X / 2 + ', ' + (window.main.mapPinMainElement.offsetTop + window.data.Y);
   }
 
+  window.form = {
+    adPinAdress: adPinAdress
+  };
+
   adPinAdress();
 
   function onSelectInput(el, funcEl) {

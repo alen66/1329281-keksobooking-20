@@ -1,6 +1,7 @@
 'use strict';
 
 (function card() {
+
   var pinElements = '';
 
   function findPinElements() {
@@ -26,7 +27,8 @@
     if (ifCardOpen) {
       cardFormClose();
     }
-    fragment.appendChild(makeCardElement(window.pin.resultXHR[el]));
+
+    fragment.appendChild(makeCardElement(window.pin.resultFilterNumber[el]));
     var mapCardElement = document.querySelector('.map');
     var mapCardBeforeElement = document.querySelector('.map__filters-container');
     mapCardElement.insertBefore(fragment, mapCardBeforeElement);
@@ -48,15 +50,18 @@
   function generateSrcPhoto(imageUrls, classElem, cardElem, classBlock) {
     var cardTempElement = cardElem.querySelector(classElem);
     var cardBlockElement = cardElem.querySelector(classBlock);
-    for (var i = 0; i < imageUrls.length - 1; i++) {
-      fragment.appendChild(cardTempElement.cloneNode(true));
+    if (imageUrls.length > 0) {
+      for (var i = 0; i < imageUrls.length - 1; i++) {
+        fragment.appendChild(cardTempElement.cloneNode(true));
+      }
+      cardBlockElement.appendChild(fragment);
+      var cardInBlockElements = cardBlockElement.querySelectorAll(classElem);
+      cardInBlockElements.forEach(function (el, imageUrl) {
+        cardInBlockElements[imageUrl].src = imageUrls[imageUrl];
+      });
+    } else {
+      cardTempElement.remove();
     }
-
-    cardBlockElement.appendChild(fragment);
-    var cardInBlockElements = cardBlockElement.querySelectorAll(classElem);
-    cardInBlockElements.forEach(function (el, imageUrl) {
-      cardInBlockElements[imageUrl].src = imageUrls[imageUrl];
-    });
   }
 
   function generateFeature(arrFeature, cardElem, classElem) {
