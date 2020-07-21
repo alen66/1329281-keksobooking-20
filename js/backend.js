@@ -1,21 +1,41 @@
 'use strict';
 
 (function backend() {
-  var API_URL = 'https://javascript.pages.academy/keksobooking/data';
+  var API_URL = 'https://javascript.pages.academy/keksobooking';
   var StatusCode = {
     OK: 200
   };
-  var TIMEOUT_IN_MS = 10000;
+  var TIMEOUT_IN_MS = 5000;
 
-  function errorHandler(errorMessage) {
-    var node = document.createElement('div');
-    node.style = 'z-index: 100; margin: 0 auto; text-align: center; background-color: red;';
-    node.style.position = 'absolute';
-    node.style.left = 0;
-    node.style.right = 0;
-    node.style.fontSize = '30px';
-    node.textContent = errorMessage;
-    document.body.insertAdjacentElement('afterbegin', node);
+  function closePopupError(errorDivElement) {
+    errorDivElement.removeEventListener('click', function () {
+      closePopupError(errorDivElement);
+    });
+
+    document.onkeydown = null;
+    errorDivElement.remove();
+  }
+
+  function errorHandler() {
+
+    var errorTemplateElement = document.querySelector('#error').content;
+    var errorElement = errorTemplateElement.querySelector('.error');
+    var errorDivElement = errorElement.cloneNode(true);
+    errorDivElement.style = 'z-index: 9';
+    window.main.adFormElement.appendChild(errorDivElement);
+
+    errorDivElement.addEventListener('click', function () {
+      closePopupError(errorDivElement);
+    });
+
+    document.onkeydown = logKey;
+
+    function logKey(e) {
+      if (e.keyCode === 27 || e.keyCode === 13) {
+        closePopupError(errorDivElement);
+      }
+    }
+    return errorDivElement;
   }
 
   function prepareXHR(onLoad, onError) {
@@ -41,15 +61,22 @@
     return xhr;
   }
 
+  function save(data, onLoad, onError) {
+    var xhr = prepareXHR(onLoad, onError);
+    xhr.open('POST', API_URL);
+    xhr.send(data);
+  }
+
   function load(onLoad, onError) {
     var xhr = prepareXHR(onLoad, onError);
 
-    xhr.open('GET', API_URL);
+    xhr.open('GET', API_URL + '/data');
     xhr.send();
   }
 
   window.backend = {
     load: load,
+    save: save,
     errorHandler: errorHandler
   };
 })();

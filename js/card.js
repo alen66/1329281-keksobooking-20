@@ -1,6 +1,12 @@
 'use strict';
 
 (function card() {
+  var TYPE_HOUSE = {
+    bungalo: 'Бунгало',
+    flat: 'Квартира',
+    house: 'Дом',
+    palace: 'Дворец'
+  };
 
   var pinElements = '';
 
@@ -28,7 +34,7 @@
       cardFormClose();
     }
 
-    fragment.appendChild(makeCardElement(window.pin.resultFilterNumber[el]));
+    fragment.appendChild(makeCardElement(window.resultFilterNumber[el]));
     var mapCardElement = document.querySelector('.map');
     var mapCardBeforeElement = document.querySelector('.map__filters-container');
     mapCardElement.insertBefore(fragment, mapCardBeforeElement);
@@ -79,14 +85,14 @@
   }
 
   function makeCardElement(arrData) {
-
     var cardTemplateElement = document.querySelector('#card').content;
     var cardElement = cardTemplateElement.cloneNode(true);
 
     cardElement.querySelector('.popup__title').textContent = arrData.offer.title;
     cardElement.querySelector('.popup__text--address').textContent = arrData.offer.address;
     cardElement.querySelector('.popup__text--price').textContent = arrData.offer.price + '₽/ночь';
-    cardElement.querySelector('.popup__type').textContent = arrData.offer.type;
+    var key = arrData.offer.type;
+    cardElement.querySelector('.popup__type').textContent = TYPE_HOUSE[key];
     cardElement.querySelector('.popup__description').textContent = arrData.offer.description;
     cardElement.querySelector('.popup__text--time').textContent = 'Заезд после ' + arrData.offer.checkin + ', выезд до ' + arrData.offer.checkout;
     cardElement.querySelector('.popup__text--capacity').textContent = arrData.offer.rooms + ' комнат(ы) для ' + arrData.offer.guests + ' гостей';
