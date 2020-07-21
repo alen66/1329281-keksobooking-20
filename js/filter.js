@@ -4,23 +4,22 @@
   var PRICEMAX = 50000;
   var PRICEMIN = 10000;
 
-  var formElement = document.querySelector('.map__filters');
+  var formElement = document.querySelector('.map__filters-container');
   var typeElements = formElement.querySelectorAll('select');
   var arrTypeHouse = [];
   var arrFilterPrice = [];
   var arrTypeRooms = [];
   var arrTypeGuests = [];
 
-
   function filterTypeHouse() {
     var typeHouseElement = document.querySelector('#housing-type');
     var typeHouse = typeHouseElement.value;
     if (typeHouse !== 'any') {
-      arrTypeHouse = window.pin.randomResultXHR.filter(function (it) {
+      arrTypeHouse = window.randomResultXHR.filter(function (it) {
         return it.offer.type === typeHouse;
       });
     } else {
-      arrTypeHouse = window.pin.randomResultXHR;
+      arrTypeHouse = window.randomResultXHR;
     }
     return arrTypeHouse;
   }
@@ -28,7 +27,7 @@
   function filterTypePrice() {
     var typePriceElement = document.querySelector('#housing-price');
     var typePriceRange = typePriceElement.value;
-    var arr = window.pin.randomResultXHR;
+    var arr = window.randomResultXHR;
 
     switch (typePriceRange) {
       case 'low':
@@ -42,7 +41,7 @@
         });
         break;
       case 'any':
-        arrFilterPrice = window.pin.randomResultXHR;
+        arrFilterPrice = window.randomResultXHR;
         break;
       default:
         arrFilterPrice = arr.filter(function (it) {
@@ -59,11 +58,11 @@
     var typeRoomsElement = document.querySelector('#housing-rooms');
     var typeRooms = typeRoomsElement.value;
     if (typeRooms !== 'any') {
-      arrTypeRooms = window.pin.randomResultXHR.filter(function (it) {
+      arrTypeRooms = window.randomResultXHR.filter(function (it) {
         return it.offer.rooms === +typeRooms;
       });
     } else {
-      arrTypeRooms = window.pin.randomResultXHR;
+      arrTypeRooms = window.randomResultXHR;
     }
     return arrTypeRooms;
   }
@@ -74,11 +73,11 @@
     var typeGuestsElement = document.querySelector('#housing-guests');
     var typeGuests = typeGuestsElement.value;
     if (typeGuests !== 'any') {
-      arrTypeGuests = window.pin.randomResultXHR.filter(function (it) {
+      arrTypeGuests = window.randomResultXHR.filter(function (it) {
         return it.offer.guests === +typeGuests;
       });
     } else {
-      arrTypeGuests = window.pin.randomResultXHR;
+      arrTypeGuests = window.randomResultXHR;
     }
     return arrTypeGuests;
   }
@@ -145,7 +144,10 @@
     window.debounce(window.pin.render(arrPins));
   }
 
-  typeElements.forEach(function () {
-    addEventListener('input', commonFilter);
+  typeElements.forEach(function (el) {
+    el.addEventListener('input', commonFilter);
+  });
+  featureElements.forEach(function (el) {
+    el.addEventListener('input', commonFilter);
   });
 })();

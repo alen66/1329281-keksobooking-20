@@ -9,13 +9,17 @@
     el.disabled = true;
   });
 
-
   function adFormElementActive() {
     document.querySelector('.map').classList.remove('map--faded');
     adFormElement.classList.remove('ad-form--disabled');
     fieldsetElements.forEach(function (el) {
       el.disabled = false;
     });
+    window.form.adPinAdress();
+    window.backend.load(window.pin.successHandler, window.backend.errorHandler);
+    mapPinMainElement.removeEventListener('mousedown', onFormOpenClick);
+    mapPinMainElement.removeEventListener('keydown', onFormOpenKey);
+
   }
 
   function onFormOpenClick(e) {
@@ -35,7 +39,9 @@
 
   window.main = {
     mapPinMainElement: mapPinMainElement,
-    adFormElement: adFormElement
+    adFormElement: adFormElement,
+    onFormOpenClick: onFormOpenClick,
+    onFormOpenKey: onFormOpenKey
   };
 
 })();

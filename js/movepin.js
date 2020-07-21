@@ -1,43 +1,62 @@
 'use strict';
 
 (function movepin() {
-  var pin = window.main.mapPinMainElement;
+  var LIMITS_MAIN_PIN = {
+    top: 130,
+    bottom: 600,
+    width: 32
+  };
 
-  pin.addEventListener('mousedown', function (evt) {
-    evt.preventDefault();
-    var startCoords = {
-      x: evt.clientX,
-      y: evt.clientY
+  var pin = window.main.mapPinMainElement;
+  var blockPins = document.querySelector('.map__overlay');
+  var isDrag = false;
+
+
+  var limits = {
+    top: LIMITS_MAIN_PIN.top,
+    right: blockPins.offsetWidth - LIMITS_MAIN_PIN.width,
+    bottom: LIMITS_MAIN_PIN.bottom,
+    left: blockPins.offsetLeft - LIMITS_MAIN_PIN.width
+  };
+
+  pin.onmousedown = function () {
+    isDrag = true;
+  };
+  document.onmouseup = function () {
+    isDrag = false;
+  };
+  document.onmousemove = function (e) {
+    if (isDrag) {
+      move(e);
+    }
+  };
+
+  function move(e) {
+    var newLocation = {
+      x: pin.offsetLeft,
+      y: pin.offsetTop
     };
 
-    function onMouseMove(moveEvt) {
-      moveEvt.preventDefault();
-
-      var shift = {
-        x: startCoords.x - moveEvt.clientX,
-        y: startCoords.y - moveEvt.clientY
-      };
-
-      startCoords = {
-        x: moveEvt.clientX,
-        y: moveEvt.clientY
-      };
-
-      pin.style.top = (pin.offsetTop - shift.y) + 'px';
-      pin.style.left = (pin.offsetLeft - shift.x) + 'px';
-
-      window.form.adPinAdress();
+    if (e.clientX > limits.right) {
+      newLocation.x = limits.right;
+    } else if (e.clientX > limits.left) {
+      newLocation.x = e.clientX;
     }
 
-    function onMouseUp(upEvt) {
-      upEvt.preventDefault();
-
-      document.removeEventListener('mousemove', onMouseMove);
-      document.removeEventListener('mouseup', onMouseUp);
+    if (e.clientY > limits.bottom) {
+      newLocation.y = limits.bottom;
+    } else if (e.clientY > limits.top) {
+      newLocation.y = e.clientY;
     }
+    relocate(newLocation);
+  }
 
-    document.addEventListener('mousemove', onMouseMove);
-    document.addEventListener('mouseup', onMouseUp);
-  });
+  function relocate(newLocation) {
+    pin.style.left = newLocation.x + 'px';
+    pin.style.top = newLocation.y + 'px';
+    window.form.adPinAdress();
+  }
 
 })();
+
+
