@@ -1,7 +1,7 @@
 'use strict';
 
 (function pin() {
-  var MAX_NUMBER_PIN = 10;
+  var MAX_NUMBER_PIN = 5;
   var mapElement = document.querySelector('.map__pins');
   var fragment = document.createDocumentFragment();
 
@@ -26,12 +26,13 @@
     return sameresultXHR;
   }
 
+
   function render(result) {
     var ifCardOpenElement = document.querySelector('.map__card');
     if (ifCardOpenElement) {
       document.querySelector('.map__card').remove();
     }
-    var resultFilterNumber = filter(result);
+    window.resultFilterNumber = filter(result);
     var pinElements = document.querySelectorAll('.map__pin');
     var pinMainElement = document.querySelector('.map__pin--main');
     if (pinElements) {
@@ -42,34 +43,28 @@
       });
     }
 
-    resultFilterNumber.forEach(function (element, index) {
+    window.resultFilterNumber.forEach(function (element, index) {
       fragment.appendChild(makeElement(element, index));
     });
 
     mapElement.appendChild(fragment);
-    window.pin = {
-      randomResultXHR: randomResultXHR,
-      render: render,
-      resultFilterNumber: resultFilterNumber
-
-    };
     window.card.findPinElements();
+    return window.resultFilterNumber;
   }
 
-  var randomResultXHR = [];
 
   function successHandler(author) {
     var resultXHR = [];
     author.forEach(function (el, index) {
       resultXHR[index] = author[index];
     });
-    randomResultXHR = shuffle(resultXHR);
+    window.randomResultXHR = shuffle(resultXHR);
 
-    return render(randomResultXHR);
+    return render(window.randomResultXHR);
   }
 
 
-  function shuffle(arr) { /* перемешивание массива */
+  function shuffle(arr) {
     var j;
     var temp;
     for (var i = arr.length - 1; i > 0; i--) {
@@ -81,6 +76,10 @@
     return arr;
   }
 
-  window.backend.load(successHandler, window.backend.errorHandler);
+  window.pin = {
+    render: render,
+    successHandler: successHandler
+  };
+
 
 })();

@@ -1,12 +1,14 @@
 'use strict';
 
 (function data() {
-  var X = 50;
-  var Y = 70;
+  var X = 66;
+  var Y = 66;
+  var Z = 10;
 
   window.data = {
     X: X,
-    Y: Y
+    Y: Y,
+    Z: Z
   };
 
 })();
