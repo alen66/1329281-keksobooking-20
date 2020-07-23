@@ -8,15 +8,15 @@
   };
 
   var pin = window.main.mapPinMainElement;
-  var blockPins = document.querySelector('.map__overlay');
+  var blockPin = document.querySelector('.map__overlay');
   var isDrag = false;
 
 
   var limits = {
     top: LIMITS_MAIN_PIN.top,
-    right: blockPins.offsetWidth - LIMITS_MAIN_PIN.width,
+    right: blockPin.offsetWidth - LIMITS_MAIN_PIN.width,
     bottom: LIMITS_MAIN_PIN.bottom,
-    left: blockPins.offsetLeft - LIMITS_MAIN_PIN.width
+    left: blockPin.offsetLeft - LIMITS_MAIN_PIN.width
   };
 
   pin.onmousedown = function () {
@@ -54,7 +54,7 @@
   function relocate(newLocation) {
     pin.style.left = newLocation.x + 'px';
     pin.style.top = newLocation.y + 'px';
-    window.form.adPinAdress();
+    window.form.addPinAdress();
   }
 
 })();

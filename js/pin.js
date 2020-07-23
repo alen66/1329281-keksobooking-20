@@ -19,7 +19,7 @@
 
   var sameresultXHR = [];
 
-  function filter(arr) {
+  function getFilterNumber(arr) {
 
     sameresultXHR = arr.slice(0, MAX_NUMBER_PIN);
 
@@ -32,7 +32,7 @@
     if (ifCardOpenElement) {
       document.querySelector('.map__card').remove();
     }
-    window.resultFilterNumber = filter(result);
+    window.resultFilterNumber = getFilterNumber(result);
     var pinElements = document.querySelectorAll('.map__pin');
     var pinMainElement = document.querySelector('.map__pin--main');
     if (pinElements) {

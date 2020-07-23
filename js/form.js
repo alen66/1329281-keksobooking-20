@@ -2,16 +2,19 @@
 (function form() {
   var ROOM_NUMBER_MAX = 100;
   var ROOM_NUMBER_MIN = 0;
-  var ARR_PRICEHOUSE_MIN = [0, 1000, 5000, 10000];
-  var ARR_TYPE_HOUSE = ['bungalo', 'flat', 'house', 'palace'];
-  var ARR_TIME = ['12:00', '13:00', '14:00'];
-
+  var ARR_MIN_PRICEHOUSES = [0, 1000, 5000, 10000];
+  var ARR_TYPE_HOUSES = ['bungalo', 'flat', 'house', 'palace'];
+  var ARR_TIMES = ['12:00', '13:00', '14:00'];
 
   var pinLocation = {
     x: window.main.mapPinMainElement.offsetLeft,
     y: window.main.mapPinMainElement.offsetTop
   };
 
+  var textLoadAvatarElement = window.main.adFormElement.querySelector('.ad-form-header__drop-zone');
+  var textFileAvatar = textLoadAvatarElement.innerHTML;
+  var textLoadImagesElement = window.main.adFormElement.querySelector('.ad-form__drop-zone');
+  var textFileImages = textLoadImagesElement.innerHTML;
 
   var roomNumberElement = window.main.adFormElement.querySelector('#room_number');
   var capacityElement = window.main.adFormElement.querySelector('#capacity');
@@ -43,16 +46,18 @@
   function cleanForm() {
     window.main.mapPinMainElement.style.left = pinLocation.x + 'px';
     window.main.mapPinMainElement.style.top = pinLocation.y + 'px';
-    adPinAdressNoActive();
+    window.main.adFormElement.querySelector('.ad-form-header__drop-zone').innerHTML = textFileAvatar;
+    window.main.adFormElement.querySelector('.ad-form__drop-zone').innerHTML = textFileImages;
+    addPinAdressNoActive();
     correctCapacity();
   }
 
   function resetForm() {
     resetButton.removeEventListener('click', resetForm);
-    adFormElementNoActive();
+    addFormElementNoActive();
   }
 
-  function adFormElementNoActive() {
+  function addFormElementNoActive() {
     resetButton.removeEventListener('click', resetForm);
     resetButton.addEventListener('click', function () {
     });
@@ -70,9 +75,22 @@
       document.querySelector('.map__card').remove();
     }
 
-    fieldsetElements.forEach(function (el) {
-      el.disabled = true;
+    var mapFilterElement = document.querySelector('.map__filters');
+    var selectMapFiltersElements = mapFilterElement.querySelectorAll('select');
+    var fieldsetMapFiltersElements = mapFilterElement.querySelectorAll('fieldset');
+
+
+    window.main.makeDisableElements(fieldsetElements, true);
+    window.main.makeDisableElements(selectMapFiltersElements, true);
+    window.main.makeDisableElements(fieldsetMapFiltersElements, true);
+
+    var featureElements = document.querySelectorAll('.map__features input');
+
+    featureElements.forEach(function (el) {
+      el.checked = false;
     });
+
+
     var pinElements = document.querySelectorAll('.map__pin');
     var pinMainElement = document.querySelector('.map__pin--main');
     if (pinElements) {
@@ -101,20 +119,20 @@
   }
 
 
-  function adPinAdressNoActive() {
+  function addPinAdressNoActive() {
     addressFormElement.value = getPinX() + ', ' + getPinY();
   }
 
-  function adPinAdress() {
+  function addPinAdress() {
     addressFormElement.value = getPinX() + ', ' + (getPinY() + window.data.Y / 2 + window.data.Z);
   }
 
   window.form = {
-    adPinAdress: adPinAdress,
-    adPinAdressNoActive: adPinAdressNoActive
+    addPinAdress: addPinAdress,
+    addPinAdressNoActive: addPinAdressNoActive
   };
 
-  adPinAdressNoActive();
+  addPinAdressNoActive();
 
   function onSelectInput(el, funcEl) {
     el.addEventListener('input', funcEl);
@@ -162,11 +180,11 @@
     valueTypeHouseElement = typeHouseElement.value;
     valuePriceHouseElement = priceHouseElement.value;
 
-    for (var i = 0; i < ARR_TYPE_HOUSE.length; i++) {
-      if (valueTypeHouseElement === ARR_TYPE_HOUSE[i]) {
-        priceHouseElement.placeholder = ARR_PRICEHOUSE_MIN[i];
-        if (+valuePriceHouseElement < ARR_PRICEHOUSE_MIN[i]) {
-          priceHouseElement.setCustomValidity('Введите значение не меньше ' + ARR_PRICEHOUSE_MIN[i] + ' руб.');
+    for (var i = 0; i < ARR_TYPE_HOUSES.length; i++) {
+      if (valueTypeHouseElement === ARR_TYPE_HOUSES[i]) {
+        priceHouseElement.placeholder = ARR_MIN_PRICEHOUSES[i];
+        if (+valuePriceHouseElement < ARR_MIN_PRICEHOUSES[i]) {
+          priceHouseElement.setCustomValidity('Введите значение не меньше ' + ARR_MIN_PRICEHOUSES[i] + ' руб.');
         } else {
           priceHouseElement.setCustomValidity('');
         }
@@ -177,18 +195,18 @@
 
   function validInTimeValue() {
     valueInTimeElement = inTimeElement.value;
-    for (var i = 0; i < ARR_TIME.length; i++) {
-      if (valueInTimeElement === ARR_TIME[i]) {
-        outTimeElement.value = ARR_TIME[i];
+    for (var i = 0; i < ARR_TIMES.length; i++) {
+      if (valueInTimeElement === ARR_TIMES[i]) {
+        outTimeElement.value = ARR_TIMES[i];
       }
     }
   }
 
   function validOutTimeValue() {
     valueOutTimeElement = outTimeElement.value;
-    for (var i = 0; i < ARR_TIME.length; i++) {
-      if (valueOutTimeElement === ARR_TIME[i]) {
-        inTimeElement.value = ARR_TIME[i];
+    for (var i = 0; i < ARR_TIMES.length; i++) {
+      if (valueOutTimeElement === ARR_TIMES[i]) {
+        inTimeElement.value = ARR_TIMES[i];
       }
     }
   }
@@ -198,24 +216,23 @@
 
 
   function validExst(file, textLoad) {
-    if (file.type === 'image/jpeg') {
+    if (file.type === 'image/jpeg' || file.type === 'image/png') {
       textLoad.innerHTML = file.name;
-      return true;
-    } else {
-      textLoad.innerHTML = 'Файл неверного формата';
-      return false;
+      return;
     }
+    textLoad.innerHTML = 'Файл неверного формата';
+    return;
   }
 
   function validLoadAvatar() {
     var file = window.main.adFormElement.elements['avatar'].files[0];
-    var textLoad = window.main.adFormElement.querySelector('.ad-form-header__drop-zone');
+    var textLoad = textLoadAvatarElement;
     validExst(file, textLoad);
   }
 
   function validLoadImages() {
     var file = window.main.adFormElement.elements['images'].files[0];
-    var textLoad = window.main.adFormElement.querySelector('.ad-form__drop-zone');
+    var textLoad = textLoadImagesElement;
     validExst(file, textLoad);
   }
 
@@ -231,7 +248,7 @@
   onSelectInput(priceHouseElement, validPriceValue);
   onSelectInput(inTimeElement, validInTimeValue);
   onSelectInput(outTimeElement, validOutTimeValue);
-  onSelectInput(addressFormElement, adPinAdress);
+  onSelectInput(addressFormElement, addPinAdress);
   onSelectInput(avatarInputElement, validLoadAvatar);
   onSelectInput(imagesInputElement, validLoadImages);
 
@@ -246,7 +263,7 @@
     document.onkeydown = null;
 
     successDivElement.remove();
-    adFormElementNoActive();
+    addFormElementNoActive();
   }
 
   function onLoadSuccess() {

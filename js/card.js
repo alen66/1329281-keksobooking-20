@@ -18,20 +18,26 @@
   var fragment = document.createDocumentFragment();
 
   function onPinsClick() {
+
     pinElements.forEach(function (element) {
       element.addEventListener('click', openCard);
     });
   }
 
   function openCard(elem) {
+    var buttonActiveElement = document.querySelector('.map__pin--active');
+    if (buttonActiveElement) {
+      buttonActiveElement.classList.remove('map__pin--active');
+    }
+    elem.target.parentNode.classList.add('map__pin--active');
     var pinClick = +elem.target.dataset.index;
-    cardFormActive(pinClick);
+    cardFormActivate(pinClick);
   }
 
-  function cardFormActive(el) {
+  function cardFormActivate(el) {
     var ifCardOpen = document.querySelector('.map__card');
     if (ifCardOpen) {
-      cardFormClose();
+      cardFormClose(el);
     }
 
     fragment.appendChild(makeCardElement(window.resultFilterNumber[el]));
@@ -47,9 +53,11 @@
 
   function cardFormClose() {
     pinElements.forEach(function (element) {
+
       element.removeEventListener('click', openCard);
     });
     document.querySelector('.map__card').remove();
+
     onPinsClick();
   }
 

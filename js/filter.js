@@ -6,54 +6,54 @@
 
   var formElement = document.querySelector('.map__filters-container');
   var typeElements = formElement.querySelectorAll('select');
-  var arrTypeHouse = [];
-  var arrFilterPrice = [];
+  var arrTypeHouses = [];
+  var arrFilterPrices = [];
   var arrTypeRooms = [];
   var arrTypeGuests = [];
 
-  function filterTypeHouse() {
+  function applayFilterTypeHouse() {
     var typeHouseElement = document.querySelector('#housing-type');
     var typeHouse = typeHouseElement.value;
     if (typeHouse !== 'any') {
-      arrTypeHouse = window.randomResultXHR.filter(function (it) {
+      arrTypeHouses = window.randomResultXHR.filter(function (it) {
         return it.offer.type === typeHouse;
       });
     } else {
-      arrTypeHouse = window.randomResultXHR;
+      arrTypeHouses = window.randomResultXHR;
     }
-    return arrTypeHouse;
+    return arrTypeHouses;
   }
 
-  function filterTypePrice() {
+  function applayFilterTypePrice() {
     var typePriceElement = document.querySelector('#housing-price');
     var typePriceRange = typePriceElement.value;
     var arr = window.randomResultXHR;
 
     switch (typePriceRange) {
       case 'low':
-        arrFilterPrice = arr.filter(function (it) {
+        arrFilterPrices = arr.filter(function (it) {
           return it.offer.price < PRICEMIN;
         });
         break;
       case 'high':
-        arrFilterPrice = arr.filter(function (it) {
+        arrFilterPrices = arr.filter(function (it) {
           return it.offer.price > PRICEMAX;
         });
         break;
       case 'any':
-        arrFilterPrice = window.randomResultXHR;
+        arrFilterPrices = window.randomResultXHR;
         break;
       default:
-        arrFilterPrice = arr.filter(function (it) {
+        arrFilterPrices = arr.filter(function (it) {
           return (it.offer.price >= PRICEMIN) && (it.offer.price <= PRICEMAX);
         });
         break;
     }
-    return arrFilterPrice;
+    return arrFilterPrices;
   }
 
 
-  function filterTypeRooms() {
+  function applayFilterTypeRooms() {
 
     var typeRoomsElement = document.querySelector('#housing-rooms');
     var typeRooms = typeRoomsElement.value;
@@ -68,7 +68,7 @@
   }
 
 
-  function filterTypeGuests() {
+  function applayFilterTypeGuests() {
 
     var typeGuestsElement = document.querySelector('#housing-guests');
     var typeGuests = typeGuestsElement.value;
@@ -111,12 +111,12 @@
     return window.featurePinArr;
   }
 
-  function commonFilter() {
-    filterTypeHouse();
-    filterTypePrice();
-    filterTypeRooms();
-    filterTypeGuests();
-    var arr1 = compareType(arrTypeHouse, arrFilterPrice);
+  function joinFilter() {
+    applayFilterTypeHouse();
+    applayFilterTypePrice();
+    applayFilterTypeRooms();
+    applayFilterTypeGuests();
+    var arr1 = compareType(arrTypeHouses, arrFilterPrices);
     var arr2 = compareType(arrTypeRooms, arrTypeGuests);
     var resultCompareType = compareType(arr1, arr2);
     var arrPins = [];
@@ -141,13 +141,13 @@
       arrPins = resultCompareType;
     }
 
-    window.debounce(window.pin.render(arrPins));
+    window.debounce.debounce(window.pin.render(arrPins));
   }
 
   typeElements.forEach(function (el) {
-    el.addEventListener('input', commonFilter);
+    el.addEventListener('input', joinFilter);
   });
   featureElements.forEach(function (el) {
-    el.addEventListener('input', commonFilter);
+    el.addEventListener('input', joinFilter);
   });
 })();

@@ -5,7 +5,7 @@
   var StatusCode = {
     OK: 200
   };
-  var TIMEOUT_IN_MS = 5000;
+  var TIMEOUT_IN_MS = 10000;
 
   function closePopupError(errorDivElement) {
     errorDivElement.removeEventListener('click', function () {
