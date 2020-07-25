@@ -89,6 +89,7 @@
     document.addEventListener('mouseup', onMouseUp);
   });
 
+
   function relocate(newLocation) {
     pin.style.left = newLocation.x + 'px';
     pin.style.top = newLocation.y + 'px';
