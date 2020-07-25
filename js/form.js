@@ -124,7 +124,7 @@
   }
 
   function addPinAdress() {
-    addressFormElement.value = getPinX() + ', ' + (getPinY() + window.data.Y / 2 + window.data.Z);
+    addressFormElement.value = getPinX() + ', ' + (getPinY() - window.data.Y / 2);
   }
 
   window.form = {
@@ -139,7 +139,7 @@
   }
 
 
-  function validRoomCapacity(roomsCount, guestsCount) {
+  function validateRoomCapacity(roomsCount, guestsCount) {
     if (+roomsCount < ROOM_NUMBER_MAX) {
       if (+roomsCount >= guestsCount) {
         if (+guestsCount > ROOM_NUMBER_MIN) {
@@ -156,11 +156,11 @@
     return false;
   }
 
-  function capacityFunc() {
+  function validateCapacity() {
     valueRoomNumberElement = roomNumberElement.value;
     valueCapacityElement = capacityElement.value;
 
-    if (!validRoomCapacity(valueRoomNumberElement, valueCapacityElement)) {
+    if (!validateRoomCapacity(valueRoomNumberElement, valueCapacityElement)) {
       if (+valueRoomNumberElement < ROOM_NUMBER_MAX) {
         if (+valueCapacityElement === ROOM_NUMBER_MIN) {
           capacityElement.setCustomValidity('Только вариант: 100 комнат');
@@ -176,7 +176,7 @@
   }
 
 
-  function validPriceValue() {
+  function validatePriceValue() {
     valueTypeHouseElement = typeHouseElement.value;
     valuePriceHouseElement = priceHouseElement.value;
 
@@ -193,7 +193,7 @@
   }
 
 
-  function validInTimeValue() {
+  function validateInTimeValue() {
     valueInTimeElement = inTimeElement.value;
     for (var i = 0; i < ARR_TIMES.length; i++) {
       if (valueInTimeElement === ARR_TIMES[i]) {
@@ -202,7 +202,7 @@
     }
   }
 
-  function validOutTimeValue() {
+  function validateOutTimeValue() {
     valueOutTimeElement = outTimeElement.value;
     for (var i = 0; i < ARR_TIMES.length; i++) {
       if (valueOutTimeElement === ARR_TIMES[i]) {
@@ -215,7 +215,7 @@
   var imagesInputElement = window.main.adFormElement.querySelector('#images');
 
 
-  function validExst(file, textLoad) {
+  function validateExst(file, textLoad) {
     if (file.type === 'image/jpeg' || file.type === 'image/png') {
       textLoad.innerHTML = file.name;
       return;
@@ -224,33 +224,33 @@
     return;
   }
 
-  function validLoadAvatar() {
+  function validateLoadAvatar() {
     var file = window.main.adFormElement.elements['avatar'].files[0];
     var textLoad = textLoadAvatarElement;
-    validExst(file, textLoad);
+    validateExst(file, textLoad);
   }
 
-  function validLoadImages() {
+  function validateLoadImages() {
     var file = window.main.adFormElement.elements['images'].files[0];
     var textLoad = textLoadImagesElement;
-    validExst(file, textLoad);
+    validateExst(file, textLoad);
   }
 
 
-  capacityFunc();
-  validPriceValue();
-  validInTimeValue();
-  validOutTimeValue();
+  validateCapacity();
+  validatePriceValue();
+  validateInTimeValue();
+  validateOutTimeValue();
 
-  onSelectInput(roomNumberElement, capacityFunc);
-  onSelectInput(capacityElement, capacityFunc);
-  onSelectInput(typeHouseElement, validPriceValue);
-  onSelectInput(priceHouseElement, validPriceValue);
-  onSelectInput(inTimeElement, validInTimeValue);
-  onSelectInput(outTimeElement, validOutTimeValue);
+  onSelectInput(roomNumberElement, validateCapacity);
+  onSelectInput(capacityElement, validateCapacity);
+  onSelectInput(typeHouseElement, validatePriceValue);
+  onSelectInput(priceHouseElement, validatePriceValue);
+  onSelectInput(inTimeElement, validateInTimeValue);
+  onSelectInput(outTimeElement, validateOutTimeValue);
   onSelectInput(addressFormElement, addPinAdress);
-  onSelectInput(avatarInputElement, validLoadAvatar);
-  onSelectInput(imagesInputElement, validLoadImages);
+  onSelectInput(avatarInputElement, validateLoadAvatar);
+  onSelectInput(imagesInputElement, validateLoadImages);
 
 
   var fieldsetElements = window.main.adFormElement.querySelectorAll('fieldset');

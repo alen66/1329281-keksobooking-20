@@ -49,7 +49,6 @@
 
     mapElement.appendChild(fragment);
     window.card.findPinElements();
-    return window.resultFilterNumber;
   }
 
 
