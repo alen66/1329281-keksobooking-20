@@ -62,7 +62,6 @@
     return render(window.randomResultXHR);
   }
 
-
   function shuffle(arr) {
     var j;
     var temp;

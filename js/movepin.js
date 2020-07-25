@@ -70,6 +70,7 @@
       relocate(newLocation);
     };
 
+
     var onMouseUp = function (upEvt) {
       upEvt.preventDefault();
 

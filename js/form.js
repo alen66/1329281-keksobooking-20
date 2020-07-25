@@ -90,7 +90,6 @@
       el.checked = false;
     });
 
-
     var pinElements = document.querySelectorAll('.map__pin');
     var pinMainElement = document.querySelector('.map__pin--main');
     if (pinElements) {

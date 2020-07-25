@@ -11,7 +11,6 @@
     errorDivElement.removeEventListener('click', function () {
       closePopupError(errorDivElement);
     });
-
     document.onkeydown = null;
     errorDivElement.remove();
   }

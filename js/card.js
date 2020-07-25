@@ -112,6 +112,7 @@
     }
   }
 
+
   function generateFeature(arrFeature, cardElem, classElem) {
     arrFeature.forEach(function (elem) {
       var perem = classElem + '--' + elem;

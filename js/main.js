@@ -34,7 +34,6 @@
     window.backend.load(window.pin.successHandler, window.backend.errorHandler);
     mapPinMainElement.removeEventListener('mousedown', onFormOpenClick);
     mapPinMainElement.removeEventListener('keydown', onFormOpenKey);
-
   }
 
   function onFormOpenClick(e) {

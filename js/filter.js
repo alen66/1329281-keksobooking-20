@@ -150,4 +150,5 @@
   featureElements.forEach(function (el) {
     el.addEventListener('input', joinFilter);
   });
+
 })();
