@@ -9,6 +9,8 @@
   var mapFilterElement = document.querySelector('.map__filters');
   var selectMapFiltersElements = mapFilterElement.querySelectorAll('select');
   var fieldsetMapFiltersElements = mapFilterElement.querySelectorAll('fieldset');
+  var mapCardElement = document.querySelector('.map');
+
 
   function makeDisableElements(el, flag) {
     el.forEach(function (elem) {
@@ -22,7 +24,7 @@
 
 
   function addFormElementActive() {
-    document.querySelector('.map').classList.remove('map--faded');
+    mapCardElement.classList.remove('map--faded');
     adFormElement.classList.remove('ad-form--disabled');
 
     makeDisableElements(fieldsetElements, false);
@@ -53,6 +55,7 @@
 
   window.main = {
     mapPinMainElement: mapPinMainElement,
+    mapCardElement: mapCardElement,
     adFormElement: adFormElement,
     onFormOpenClick: onFormOpenClick,
     onFormOpenKey: onFormOpenKey,

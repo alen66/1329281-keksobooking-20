@@ -2,23 +2,34 @@
 
 (function movepin() {
   var LIMITS_MAIN_PIN = {
-    top: 130,
-    bottom: 630,
-    width: 32
+    top: 93,
+    height: 112
   };
 
   var pin = window.main.mapPinMainElement;
   var blockPin = document.querySelector('.map__overlay');
 
-  var limits = {
-    top: LIMITS_MAIN_PIN.top,
-    right: blockPin.offsetWidth - LIMITS_MAIN_PIN.width,
-    bottom: LIMITS_MAIN_PIN.bottom,
-    left: blockPin.offsetLeft - LIMITS_MAIN_PIN.width
-  };
+  function getCoords(elem) {
+    var box = elem.getBoundingClientRect();
+    return {
+      bottom: box.bottom,
+      top: box.top,
+      left: box.left + pageXOffset
+    };
+  }
+
 
   pin.addEventListener('mousedown', function (evt) {
     evt.preventDefault();
+    window.sizeMarginLeft = getCoords(blockPin).left;
+    window.sizeMarginTop = getCoords(blockPin).top;
+    var limitBottom = getCoords(blockPin).bottom;
+    var limits = {
+      top: LIMITS_MAIN_PIN.top + window.sizeMarginTop,
+      right: blockPin.offsetWidth + (pin.offsetWidth / 6) + window.sizeMarginLeft,
+      bottom: limitBottom - LIMITS_MAIN_PIN.height,
+      left: blockPin.offsetLeft - (pin.offsetWidth / 6) + window.sizeMarginLeft
+    };
 
     var startCoords = {
       x: evt.clientX,
@@ -92,10 +103,9 @@
 
 
   function relocate(newLocation) {
-    pin.style.left = newLocation.x + 'px';
-    pin.style.top = newLocation.y + 'px';
+    pin.style.left = newLocation.x - (pin.offsetWidth / 2) - window.sizeMarginLeft + 'px';
+    pin.style.top = newLocation.y - (pin.offsetWidth / 2) - window.sizeMarginTop + 'px';
     window.form.addPinAdress();
   }
 
 })();
-

@@ -67,12 +67,12 @@
 
     cleanForm();
 
-    document.querySelector('.map').classList.add('map--faded');
+    window.main.mapCardElement.classList.add('map--faded');
     window.main.adFormElement.classList.add('ad-form--disabled');
     var ifCardOpen = document.querySelector('.map__card');
 
     if (ifCardOpen) {
-      document.querySelector('.map__card').remove();
+      ifCardOpen.remove();
     }
 
     var mapFilterElement = document.querySelector('.map__filters');
@@ -123,7 +123,7 @@
   }
 
   function addPinAdress() {
-    addressFormElement.value = getPinX() + ', ' + (getPinY() - window.data.Y / 2);
+    addressFormElement.value = (getPinX() + window.data.X / 2) + ', ' + Math.ceil((getPinY() + window.data.Y / 2 + window.data.Z));
   }
 
   window.form = {

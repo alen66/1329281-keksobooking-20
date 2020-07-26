@@ -55,17 +55,16 @@
     cardFormActivate(pinClick);
   }
 
-  var mapCardElement = document.querySelector('.map');
 
   function cardFormActivate(el) {
-    var ifCardOpen = document.querySelector('.map__card');
-    if (ifCardOpen) {
+    var cardOpenElement = document.querySelector('.map__card');
+    if (cardOpenElement) {
       cardFormClose(el);
     }
 
     fragment.appendChild(makeCardElement(window.resultFilterNumber[el]));
     var mapCardBeforeElement = document.querySelector('.map__filters-container');
-    mapCardElement.insertBefore(fragment, mapCardBeforeElement);
+    window.main.mapCardElement.insertBefore(fragment, mapCardBeforeElement);
     onPopupClose();
   }
 
@@ -122,6 +121,13 @@
     if (arrFeature.length === 0) {
       cardElem.querySelector('.popup__features').style.display = 'none';
     }
+
+    var ulNodeList = cardElem.querySelectorAll(classElem);
+    ulNodeList.forEach(function (el) {
+      if (el.innerText === '') {
+        el.style.display = 'none';
+      }
+    });
   }
 
   function makeCardElement(arrData) {
