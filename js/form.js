@@ -69,10 +69,10 @@
 
     window.main.mapCardElement.classList.add('map--faded');
     window.main.adFormElement.classList.add('ad-form--disabled');
-    var ifCardOpen = document.querySelector('.map__card');
+    var cardOpenElement = document.querySelector('.map__card');
 
-    if (ifCardOpen) {
-      ifCardOpen.remove();
+    if (cardOpenElement) {
+      cardOpenElement.remove();
     }
 
     var mapFilterElement = document.querySelector('.map__filters');
